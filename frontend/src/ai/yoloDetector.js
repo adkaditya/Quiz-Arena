@@ -3,7 +3,7 @@ import { getYOLOSession, loadYOLO } from "./yoloLoader.js";
 
 const INPUT_SIZE = 640;
 const PHONE_CLASS_ID = 67;
-const CONFIDENCE_THRESHOLD = 0.5;
+const CONFIDENCE_THRESHOLD = 0.2;
 const IOU_THRESHOLD = 0.45;
 const MIN_BOX_AREA_RATIO = 0.002;
 const MAX_BOX_AREA_RATIO = 0.65;
@@ -134,13 +134,32 @@ export async function detectObjects(
       return [];
     }
   }
+  let maxScore = 0;
+
+for (let anchor = 0; anchor < layout.numAnchors; anchor++) {
+    const score = normalizeScore(getValue(4 + targetClassId, anchor));
+
+    if (score > maxScore) {
+        maxScore = score;
+    }
+}
+
+console.log("MAX PHONE SCORE =", maxScore);
 
   try {
     const inputTensor = preprocess(video, INPUT_SIZE, INPUT_SIZE);
     const feeds = { [session.inputNames[0]]: inputTensor };
     const results = await session.run(feeds);
-    const output = results[session.outputNames[0]];
-    const layout = getOutputLayout(output?.dims);
+    console.log("Results:", results);
+
+
+
+const output = results[session.outputNames[0]];
+const layout = getOutputLayout(output.dims);
+console.log("Output Shape:", output.dims);
+console.log("Output Length:", output.data.length);
+console.log("Layout:", layout);
+
 
     if (!output?.data || !layout || layout.numChannels <= 4 + targetClassId) {
       return [];
@@ -154,12 +173,27 @@ export async function detectObjects(
       return output.data[anchor * layout.numChannels + channel];
     };
 
+let maxScore = 0;
+
+for (let anchor = 0; anchor < layout.numAnchors; anchor++) {
+    const score = normalizeScore(getValue(4 + targetClassId, anchor));
+
+    if (score > maxScore) {
+        maxScore = score;
+    }
+}
+
+console.log("MAX PHONE SCORE =", maxScore);
+
     const boxes = [];
     const scaleX = video.videoWidth / INPUT_SIZE;
     const scaleY = video.videoHeight / INPUT_SIZE;
 
     for (let anchor = 0; anchor < layout.numAnchors; anchor += 1) {
       const score = normalizeScore(getValue(4 + targetClassId, anchor));
+      if (score > 0.1) {
+  console.log("Anchor:", anchor, "Score:", score);
+}
 
       if (score < confidenceThreshold) {
         continue;
@@ -189,9 +223,11 @@ export async function detectObjects(
     }
 
     return nms(boxes);
-  } catch {
-    return [];
   }
+  catch (err) {
+  console.error("YOLO Error:", err);
+  return [];
+}
 }
 
 export async function detectPhones(video) {
