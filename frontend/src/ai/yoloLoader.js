@@ -10,11 +10,11 @@ export async function loadYOLO() {
   ort.env.wasm.wasmPaths = "/ort-wasm/";
   ort.env.wasm.numThreads = 1;
 
-const session = await ort.InferenceSession.create("/models/yolov8n.onnx", {
-  executionProviders: ["wasm"],
-  });
 
-  return session;
+  session = await ort.InferenceSession.create(MODEL_URL, {
+    executionProviders: ["wasm"],
+  });
+return session;
 }
 
 export function getYOLOSession() {

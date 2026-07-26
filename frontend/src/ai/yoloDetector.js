@@ -134,31 +134,19 @@ export async function detectObjects(
       return [];
     }
   }
-  let maxScore = 0;
+ 
 
-for (let anchor = 0; anchor < layout.numAnchors; anchor++) {
-    const score = normalizeScore(getValue(4 + targetClassId, anchor));
 
-    if (score > maxScore) {
-        maxScore = score;
-    }
-}
-
-console.log("MAX PHONE SCORE =", maxScore);
 
   try {
     const inputTensor = preprocess(video, INPUT_SIZE, INPUT_SIZE);
     const feeds = { [session.inputNames[0]]: inputTensor };
     const results = await session.run(feeds);
-    console.log("Results:", results);
-
+  
 
 
 const output = results[session.outputNames[0]];
 const layout = getOutputLayout(output.dims);
-console.log("Output Shape:", output.dims);
-console.log("Output Length:", output.data.length);
-console.log("Layout:", layout);
 
 
     if (!output?.data || !layout || layout.numChannels <= 4 + targetClassId) {
