@@ -3,8 +3,8 @@ import { getYOLOSession, loadYOLO } from "./yoloLoader.js";
 
 const INPUT_SIZE = 640;
 const PHONE_CLASS_ID = 67;
-const CONFIDENCE_THRESHOLD = 0.2;
-const IOU_THRESHOLD = 0.45;
+const CONFIDENCE_THRESHOLD = 0.05;
+const IOU_THRESHOLD = 0.60;
 const MIN_BOX_AREA_RATIO = 0.002;
 const MAX_BOX_AREA_RATIO = 0.65;
 const MIN_BOX_SIDE = 18;
@@ -140,19 +140,50 @@ export async function detectObjects(
 
   try {
     const inputTensor = preprocess(video, INPUT_SIZE, INPUT_SIZE);
-    const feeds = { [session.inputNames[0]]: inputTensor };
-    const results = await session.run(feeds);
-  
+    
+const inputName = session.inputNames?.[0];
+
+if (!inputName) {
+  console.error("YOLO input tensor not found.");
+  return [];
+}
+
+const feeds = {
+  [inputName]: inputTensor,
+};
 
 
-const output = results[session.outputNames[0]];
+const results = await session.run(feeds);
+
+const outputName = session.outputNames?.[0];
+
+if (!outputName || !results[outputName]) {
+  console.error("YOLO output tensor not found.");
+  return [];
+}
+
+const output = results[outputName];
+
+console.log("Output Names:", session.outputNames);
+console.log("Output Shape:", output.dims);
+
+if (!output?.data || !output?.dims) {
+  console.error("Invalid YOLO output.");
+  return [];
+}
+
+
 const layout = getOutputLayout(output.dims);
 
+if (!layout) {
+  console.error("Unsupported YOLO output layout:", output.dims);
+  return [];
+}
 
-    if (!output?.data || !layout || layout.numChannels <= 4 + targetClassId) {
-      return [];
-    }
-
+if (layout.numChannels <= 4 + targetClassId) {
+  console.error("Phone class index not found in model.");
+  return [];
+}
     const getValue = (channel, anchor) => {
       if (layout.transposed) {
         return output.data[channel * layout.numAnchors + anchor];
@@ -161,59 +192,62 @@ const layout = getOutputLayout(output.dims);
       return output.data[anchor * layout.numChannels + channel];
     };
 
+
+const boxes = [];
+const scaleX = video.videoWidth / INPUT_SIZE;
+const scaleY = video.videoHeight / INPUT_SIZE;
+
 let maxScore = 0;
 
-for (let anchor = 0; anchor < layout.numAnchors; anchor++) {
-    const score = normalizeScore(getValue(4 + targetClassId, anchor));
+for (let anchor = 0; anchor < layout.numAnchors; anchor += 1) {
+  const score = normalizeScore(getValue(4 + targetClassId, anchor));
 
-    if (score > maxScore) {
-        maxScore = score;
-    }
+  maxScore = Math.max(maxScore, score);
+
+  if (score < confidenceThreshold) {
+    continue;
+  }
+
+  const centerX = getValue(0, anchor);
+  const centerY = getValue(1, anchor);
+  const boxWidth = getValue(2, anchor);
+  const boxHeight = getValue(3, anchor);
+
+  const bbox = [
+    Math.max(0, (centerX - boxWidth / 2) * scaleX),
+    Math.max(0, (centerY - boxHeight / 2) * scaleY),
+    boxWidth * scaleX,
+    boxHeight * scaleY,
+  ];
+
+  if (!isPlausiblePhoneBox(bbox, video)) {
+    continue;
+  }
+
+  boxes.push({
+    class: "cell phone",
+    classId: targetClassId,
+    score,
+    bbox,
+  });
 }
 
 console.log("MAX PHONE SCORE =", maxScore);
+console.log("PHONE BOXES =", boxes.length);
 
-    const boxes = [];
-    const scaleX = video.videoWidth / INPUT_SIZE;
-    const scaleY = video.videoHeight / INPUT_SIZE;
-
-    for (let anchor = 0; anchor < layout.numAnchors; anchor += 1) {
-      const score = normalizeScore(getValue(4 + targetClassId, anchor));
-      if (score > 0.1) {
-  console.log("Anchor:", anchor, "Score:", score);
-}
-
-      if (score < confidenceThreshold) {
-        continue;
-      }
-
-      const centerX = getValue(0, anchor);
-      const centerY = getValue(1, anchor);
-      const boxWidth = getValue(2, anchor);
-      const boxHeight = getValue(3, anchor);
-      const bbox = [
-        Math.max(0, (centerX - boxWidth / 2) * scaleX),
-        Math.max(0, (centerY - boxHeight / 2) * scaleY),
-        boxWidth * scaleX,
-        boxHeight * scaleY,
-      ];
-
-      if (!isPlausiblePhoneBox(bbox, video)) {
-        continue;
-      }
-
-      boxes.push({
-        class: "cell phone",
-        classId: targetClassId,
-        score,
-        bbox,
-      });
-    }
-
-    return nms(boxes);
+return nms(boxes);
+  
   }
   catch (err) {
-  console.error("YOLO Error:", err);
+  console.error("YOLO inference failed:", err);
+
+  if (
+    err?.message?.includes("Tensor") ||
+    err?.message?.includes("shape")
+  ) {
+    console.error("Model output shape mismatch.");
+  }
+
   return [];
 }
 }

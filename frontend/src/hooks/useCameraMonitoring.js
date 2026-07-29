@@ -6,7 +6,7 @@ import {
   loadFaceDetector,
   checkFaceViolations,
 } from "../ai/faceDetector.js";
-const DETECTION_INTERVAL_MS = 900;
+const DETECTION_INTERVAL_MS = 600;
 const REQUIRED_CONSECUTIVE_DETECTIONS = 2;
 const VIOLATION_COOLDOWN_MS = 8000;
 
@@ -169,9 +169,12 @@ const onViolationRef = useRef(onViolation);
 
       isProcessingRef.current = true;
       try {
-        const phones = await detectPhones(node);
-const face = await checkFaceViolations(node);
-
+       const [phones, face] = await Promise.all([
+  detectPhones(node),
+  checkFaceViolations(node),
+]);
+console.log("Detected Phones:", phones);
+console.log("Face Result:", face);
 const now = Date.now();
 
 // Multiple Face

@@ -1,3 +1,5 @@
+import { toast } from "react-hot-toast";
+import Loading from "../../components/shared/Loading";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import {
@@ -677,25 +679,24 @@ function DashboardHome() {
                             fill="transparent"
                           />
                           <circle
-                            cx="48"
-                            cy="48"
-                            r="42"
-                            className={
-                              attemptDetails.score >= 85
-                                ? "stroke-emerald-500"
-                                : attemptDetails.score >= 70
-                                ? "stroke-indigo-500"
-                                : attemptDetails.score >= 50
-                                ? "stroke-amber-500"
-                                : "stroke-rose-500"
-                            }
-                            strokeWidth="6"
-                            fill="transparent"
-                            strokeDasharray={264}
-                            strokeDashoffset={264 - (264 * attemptDetails.score) / 100}
-                            strokeLinecap="round"
-                            className="transition-all duration-1000"
-                          />
+  cx="48"
+  cy="48"
+  r="42"
+  className={`transition-all duration-1000 ${
+    attemptDetails.score >= 85
+      ? "stroke-emerald-500"
+      : attemptDetails.score >= 70
+      ? "stroke-indigo-500"
+      : attemptDetails.score >= 50
+      ? "stroke-amber-500"
+      : "stroke-rose-500"
+  }`}
+  strokeWidth="6"
+  fill="transparent"
+  strokeDasharray={264}
+  strokeDashoffset={264 - (264 * attemptDetails.score) / 100}
+  strokeLinecap="round"
+/>
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
                           <span className="text-xl font-extrabold leading-none">

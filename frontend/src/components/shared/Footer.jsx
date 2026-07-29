@@ -1,54 +1,120 @@
-import { Brain } from "lucide-react";
+import { Brain, Mail, Heart } from "lucide-react";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { Separator } from "../ui/separator";
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t mt-16">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-3">
-              <Brain size={24} className="text-primary" />
-              <span className="text-xl font-bold">Quizify</span>
+    <footer className="relative mt-20 overflow-hidden border-t bg-background">
+      {/* Background Glow */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom,hsl(var(--primary)/0.08),transparent_70%)]" />
+
+      <div className="container mx-auto px-5 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+          {/* Logo */}
+          <div className="lg:col-span-2">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+                <Brain className="text-primary" size={24} />
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold">Quizify</h2>
+                <p className="text-xs text-muted-foreground">
+                  AI Powered Learning Platform
+                </p>
+              </div>
             </div>
-            <p className="text-muted-foreground text-sm">
-              AI-powered quizzes to supercharge your learning journey.
+
+            <p className="max-w-md leading-7 text-muted-foreground">
+              Generate AI-powered quizzes, improve your skills, monitor your
+              progress, and prepare smarter with one intelligent learning
+              platform.
             </p>
+
+            {/* Social Icons */}
+            <div className="mt-6 flex gap-4">
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border p-3 transition-all hover:border-primary hover:bg-primary/10"
+              >
+                <FaGithub size={18} />
+              </a>
+
+              <a
+                href="https://linkedin.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border p-3 transition-all hover:border-primary hover:bg-primary/10"
+              >
+                <FaLinkedin size={18} />
+              </a>
+
+              <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border p-3 transition-all hover:border-primary hover:bg-primary/10"
+              >
+                <FaXTwitter size={18} />
+              </a>
+
+              <a
+                href="mailto:example@gmail.com"
+                className="rounded-xl border p-3 transition-all hover:border-primary hover:bg-primary/10"
+              >
+                <Mail size={18} />
+              </a>
+            </div>
           </div>
 
+          {/* Product */}
           <div>
-            <h4 className="font-semibold mb-3">Product</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">FAQ</a></li>
+            <h3 className="mb-5 font-semibold">Product</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><a href="#" className="transition hover:text-primary">Features</a></li>
+              <li><a href="#" className="transition hover:text-primary">AI Quiz Generator</a></li>
+              <li><a href="#" className="transition hover:text-primary">Dashboard</a></li>
+              <li><a href="#" className="transition hover:text-primary">Analytics</a></li>
             </ul>
           </div>
 
+          {/* Resources */}
           <div>
-            <h4 className="font-semibold mb-3">Company</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
+            <h3 className="mb-5 font-semibold">Resources</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><a href="#" className="transition hover:text-primary">Documentation</a></li>
+              <li><a href="#" className="transition hover:text-primary">FAQ</a></li>
+              <li><a href="#" className="transition hover:text-primary">Blog</a></li>
+              <li><a href="#" className="transition hover:text-primary">Contact</a></li>
             </ul>
           </div>
 
+          {/* Legal */}
           <div>
-            <h4 className="font-semibold mb-3">Legal</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Cookie Policy</a></li>
+            <h3 className="mb-5 font-semibold">Legal</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><a href="#" className="transition hover:text-primary">Privacy Policy</a></li>
+              <li><a href="#" className="transition hover:text-primary">Terms of Service</a></li>
+              <li><a href="#" className="transition hover:text-primary">Cookie Policy</a></li>
+              <li><a href="#" className="transition hover:text-primary">Security</a></li>
             </ul>
           </div>
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-10" />
 
-        <p className="text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Quizify. All rights reserved.
-        </p>
+        {/* Bottom */}
+        <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground md:flex-row">
+          <p>© {new Date().getFullYear()} Quizify. All Rights Reserved.</p>
+
+          <p className="flex items-center gap-2">
+            Made with
+            <Heart size={15} className="fill-red-500 text-red-500" />
+            for Learners Worldwide
+          </p>
+        </div>
       </div>
     </footer>
   );

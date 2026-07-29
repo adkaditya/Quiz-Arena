@@ -6,7 +6,9 @@ import {
   ChartNoAxesCombined,
   Bot,
   ShieldCheck,
+  ArrowRight,
 } from "lucide-react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
@@ -15,83 +17,117 @@ const features = [
   {
     title: "AI Quiz Generator",
     icon: Brain,
-    desc: "Paste any topic or document and get a full quiz in seconds — powered by state-of-the-art AI.",
+    desc: "Paste any topic or document and instantly generate high-quality AI quizzes.",
     color: "bg-violet-500/10 text-violet-500",
   },
   {
     title: "Adaptive Difficulty",
     icon: Target,
-    desc: "Questions automatically adjust to your skill level so you're always challenged, never overwhelmed.",
+    desc: "Questions automatically adapt to your performance and learning speed.",
     color: "bg-blue-500/10 text-blue-500",
   },
   {
     title: "Instant AI Feedback",
     icon: Bot,
-    desc: "Get clear, concise explanations after every answer so you understand — not just memorize.",
+    desc: "Receive detailed AI explanations after every answer to improve faster.",
     color: "bg-emerald-500/10 text-emerald-500",
   },
   {
     title: "Progress Analytics",
     icon: ChartNoAxesCombined,
-    desc: "Visual dashboards show your weak spots, streaks, and improvement trends over time.",
+    desc: "Track performance with detailed reports, strengths, and improvement areas.",
     color: "bg-orange-500/10 text-orange-500",
   },
   {
     title: "Timed Exam Mode",
     icon: Clock,
-    desc: "Simulate real exam pressure with configurable timers and countdown alerts.",
+    desc: "Practice under real exam conditions with countdown timers and auto-submit.",
     color: "bg-rose-500/10 text-rose-500",
   },
   {
     title: "Secure & Private",
     icon: ShieldCheck,
-    desc: "Your learning data is encrypted and never shared. You own your progress.",
+    desc: "Your quizzes and learning history remain safe with secure authentication.",
     color: "bg-teal-500/10 text-teal-500",
   },
 ];
 
 export default function Features() {
   return (
-    <section className="container mx-auto px-6 py-24">
-      <div className="text-center max-w-2xl mx-auto mb-14">
-        <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5">
-          Everything You Need
-        </Badge>
-        <h2 className="text-4xl font-extrabold tracking-tight">
-          Powerful Features for Smarter Learning
-        </h2>
-        <p className="mt-4 text-muted-foreground text-lg">
-          From AI quiz creation to deep analytics — every tool you need to learn
-          faster and retain more.
-        </p>
-      </div>
+    <section className="relative overflow-hidden py-16 lg:py-24">
+      {/* Background Glow */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.08),transparent_70%)]" />
 
-      <div className="grid md:grid-cols-3 gap-6">
-        {features.map((item, index) => (
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.08 }}
+      <div className="container mx-auto px-5 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <Badge
+            variant="outline"
+            className="mb-4 border-primary/30 bg-primary/5 text-primary"
           >
-            <Card className="h-full group hover:shadow-lg hover:border-primary/30 transition-all duration-300">
-              <CardContent className="p-6 flex flex-col gap-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${item.color}`}>
-                  <item.icon size={24} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
+            Everything You Need
+          </Badge>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+            Powerful Features for Smarter Learning
+          </h2>
+
+          <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+            Everything you need to generate AI quizzes, improve faster,
+            analyze progress, and prepare for real-world exams.
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {features.map((item, index) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+            >
+              <Card className="group h-full overflow-hidden rounded-2xl border bg-background/70 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-2xl">
+                <CardContent className="flex h-full flex-col p-7">
+                  {/* Icon */}
+                  <motion.div
+                    whileHover={{
+                      rotate: 10,
+                      scale: 1.12,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                    }}
+                    className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl ${item.color}`}
+                  >
+                    <item.icon size={28} />
+                  </motion.div>
+
+                  {/* Title */}
+                  <h3 className="text-xl font-semibold transition-colors duration-300 group-hover:text-primary">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+
+                  {/* Description */}
+                  <p className="mt-3 flex-1 leading-7 text-muted-foreground">
                     {item.desc}
                   </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+
+                  {/* CTA */}
+                  <button className="mt-6 flex items-center gap-2 font-medium text-primary transition-all group-hover:gap-3">
+                    Learn More
+                    <ArrowRight size={17} />
+                  </button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

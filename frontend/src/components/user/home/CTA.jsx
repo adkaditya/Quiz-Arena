@@ -1,58 +1,95 @@
 import { Button } from "../../ui/button";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  CheckCircle,
+} from "lucide-react";
 
 export default function CTA() {
   return (
-    <section className="container mx-auto px-6 py-24">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="relative overflow-hidden rounded-3xl bg-primary text-primary-foreground p-14 text-center shadow-2xl"
-      >
-        {/* Background glow blobs */}
-        <div className="absolute -top-10 -left-10 w-64 h-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 -right-10 w-64 h-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+    <section className="relative overflow-hidden py-16 lg:py-24">
+      {/* Background */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.08),transparent_70%)]" />
 
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
-            <Sparkles size={15} />
-            No credit card required
+      <div className="container mx-auto px-5 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative overflow-hidden rounded-3xl bg-primary px-8 py-14 text-center text-primary-foreground shadow-2xl lg:px-16 lg:py-20"
+        >
+          {/* Animated Glow */}
+          <div className="absolute -left-16 -top-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+
+          <div className="relative z-10 mx-auto max-w-3xl">
+            {/* Badge */}
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 text-sm font-medium backdrop-blur">
+              <Sparkles size={16} />
+              AI-Powered Learning Platform
+            </div>
+
+            {/* Heading */}
+            <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
+              Ready to Transform
+              <br />
+              Your Learning Journey?
+            </h2>
+
+            {/* Description */}
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-primary-foreground/85 sm:text-lg">
+              Generate AI quizzes, track your progress, improve your knowledge,
+              and prepare smarter with one intelligent platform built for modern
+              learners.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+              <Button
+                size="lg"
+                variant="secondary"
+                className="gap-2 font-semibold text-primary shadow-lg"
+              >
+                Start Learning Free
+                <ArrowRight size={18} />
+              </Button>
+
+              <Button
+                size="lg"
+                variant="ghost"
+                className="border border-white/30 text-white hover:bg-white/10"
+              >
+                Explore Features
+              </Button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-primary-foreground/90">
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} />
+                Free Forever Plan
+              </div>
+
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} />
+                No Credit Card
+              </div>
+
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} />
+                AI Powered
+              </div>
+            </div>
+
+            {/* Bottom Text */}
+            <p className="mt-8 text-sm text-primary-foreground/70">
+              Trusted by thousands of students, educators, and professionals.
+            </p>
           </div>
-
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight max-w-2xl mx-auto leading-tight">
-            Ready to learn smarter — not harder?
-          </h2>
-
-          <p className="mt-5 text-primary-foreground/80 text-lg max-w-xl mx-auto">
-            Join 10,000+ learners already using Quizify to ace exams, upskill
-            faster, and retain more with AI.
-          </p>
-
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Button
-              size="lg"
-              variant="secondary"
-              className="gap-2 font-semibold text-primary"
-            >
-              Get Started for Free <ArrowRight size={16} />
-            </Button>
-            <Button
-              size="lg"
-              variant="ghost"
-              className="text-primary-foreground border border-primary-foreground/30 hover:bg-white/10"
-            >
-              View Demo
-            </Button>
-          </div>
-
-          <p className="mt-6 text-sm text-primary-foreground/60">
-            Free plan · No setup · Cancel anytime
-          </p>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -372,36 +372,25 @@ function QuizAttemptsPage() {
                     <div className="text-center space-y-3">
                       <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90">
-                          <circle
-                            cx="48"
-                            cy="48"
-                            r="42"
-                            className="stroke-muted"
-                            strokeWidth="6"
-                            fill="transparent"
-                          />
-                          <circle
-                            cx="48"
-                            cy="48"
-                            r="42"
-                            className={
-                              attemptDetails.score >= 85
-                                ? "stroke-emerald-500"
-                                : attemptDetails.score >= 70
-                                  ? "stroke-indigo-500"
-                                  : attemptDetails.score >= 50
-                                    ? "stroke-amber-500"
-                                    : "stroke-rose-500"
-                            }
-                            strokeWidth="6"
-                            fill="transparent"
-                            strokeDasharray={264}
-                            strokeDashoffset={
-                              264 - (264 * attemptDetails.score) / 100
-                            }
-                            strokeLinecap="round"
-                            className="transition-all duration-1000"
-                          />
+                     <circle
+  cx="48"
+  cy="48"
+  r="42"
+  className={`transition-all duration-1000 ${
+    attemptDetails.score >= 85
+      ? "stroke-emerald-500"
+      : attemptDetails.score >= 70
+        ? "stroke-indigo-500"
+        : attemptDetails.score >= 50
+          ? "stroke-amber-500"
+          : "stroke-rose-500"
+  }`}
+  strokeWidth="6"
+  fill="transparent"
+  strokeDasharray={264}
+  strokeDashoffset={264 - (264 * attemptDetails.score) / 100}
+  strokeLinecap="round"
+/>
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
                           <span className="text-xl font-extrabold leading-none">

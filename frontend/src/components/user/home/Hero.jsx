@@ -60,9 +60,8 @@ export default function Hero() {
     className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-500/20 blur-[150px]"
   />
 </>
-
-      <div className="container mx-auto px-6 py-24">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+<div className="container mx-auto px-5 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Left — text */}
           <motion.div
@@ -75,7 +74,7 @@ export default function Hero() {
               AI-Powered Quiz Platform
             </Badge>
 
-            <h1 className="text-5xl font-extrabold leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
               Learn Faster with{" "}
               <span className="text-primary">Intelligent</span>{" "}
               Quizzes
@@ -85,8 +84,7 @@ export default function Hero() {
               Quizify uses advanced AI to generate adaptive quizzes, provide instant
               feedback, and give you a personalized path to mastery — for any topic.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
+<div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="gap-2">
                 Start for Free <ArrowRight size={16} />
               </Button>
