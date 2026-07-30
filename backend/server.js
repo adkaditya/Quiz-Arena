@@ -50,6 +50,12 @@ app.use("/api/v1", userRouter);
 // ✅ AI Routes
 app.use("/api/v1/ai", aiRouter);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "AI Role Quiz Backend is Running 🚀",
+  });
+});
 app.use(exceptionHandler);
 
 const PORT = process.env.PORT || 5000;
