@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosClient = axios.create({
-  baseURL: "https://ai-quiz-backend.onrender.com/api/v1",
+baseURL: "https://ai-role-quiz-generator.onrender.com/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
