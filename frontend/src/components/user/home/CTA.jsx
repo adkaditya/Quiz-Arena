@@ -21,7 +21,17 @@ export default function CTA() {
           className="relative overflow-hidden rounded-3xl bg-primary px-8 py-14 text-center text-primary-foreground shadow-2xl lg:px-16 lg:py-20"
         >
           {/* Animated Glow */}
-          <div className="absolute -left-16 -top-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+         <motion.div
+  animate={{
+    scale: [1, 1.15, 1],
+    opacity: [0.15, 0.3, 0.15],
+  }}
+  transition={{
+    duration: 6,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+/>
           <div className="absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
 
           <div className="relative z-10 mx-auto max-w-3xl">
