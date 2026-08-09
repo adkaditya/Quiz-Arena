@@ -14,12 +14,25 @@ import {
 } from "lucide-react";
 
 import { Button } from "../../ui/button";
-import { Badge } from "../../ui/badge";const stats = [
-  { icon: Users, value: "10K+", label: "Active Learners" },
-  { icon: BookOpen, value: "50K+", label: "Quizzes Created" },
-  { icon: Trophy, value: "98%", label: "Satisfaction Rate" },
+import { Badge } from "../../ui/badge";
+const stats = [
+  {
+    icon: Users,
+    value: 10000,
+    label: "Active Learners",
+  },
+  {
+    icon: BookOpen,
+    value: 50000,
+    label: "AI Quizzes",
+  },
+  {
+    icon: Trophy,
+    value: 98,
+    label: "Success Rate",
+    suffix: "%",
+  },
 ];
-
 const mockQuestion = {
   q: "Which layer of neural networks applies learned filters across input data?",
   options: ["Dense Layer", "Convolutional Layer", "Dropout Layer", "Embedding Layer"],
@@ -33,8 +46,37 @@ export default function Hero() {
   <div className="absolute inset-0 -z-30 bg-background" />
 
   <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.18),transparent_50%)]" />
+<>
+  <div className="absolute inset-0 -z-30 bg-background" />
+
+  <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.18),transparent_55%)]" />
 
   <div className="absolute inset-0 -z-20 bg-[linear-gradient(to_right,hsl(var(--border)/0.2)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.2)_1px,transparent_1px)] bg-[size:42px_42px]" />
+
+  <motion.div
+    animate={{
+      x: [0, 80, 0],
+      y: [0, -60, 0],
+    }}
+    transition={{
+      repeat: Infinity,
+      duration: 12,
+    }}
+    className="absolute left-0 top-12 h-80 w-80 rounded-full bg-violet-500/20 blur-[120px]"
+  />
+
+  <motion.div
+    animate={{
+      x: [0, -80, 0],
+      y: [0, 60, 0],
+    }}
+    transition={{
+      repeat: Infinity,
+      duration: 15,
+    }}
+    className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-500/20 blur-[140px]"
+  />
+</>
 
   <motion.div
     animate={{
@@ -73,25 +115,41 @@ export default function Hero() {
               <Sparkles size={14} />
               AI-Powered Quiz Platform
             </Badge>
+<h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              Learn Faster with{" "}
-              <span className="text-primary">Intelligent</span>{" "}
-              Quizzes
-            </h1>
+  Master Any Skill
+
+  <span className="block bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">
+    With AI Learning
+  </span>
+
+</h1>
 
             <p className="mt-6 text-muted-foreground text-lg leading-relaxed max-w-md">
               Quizify uses advanced AI to generate adaptive quizzes, provide instant
               feedback, and give you a personalized path to mastery — for any topic.
             </p>
-<div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2">
-                Start for Free <ArrowRight size={16} />
-              </Button>
-              <Button size="lg" variant="outline">
-                See How It Works
-              </Button>
-            </div>
+<div className="mt-8 flex flex-wrap gap-4">
+
+  <Button
+    size="lg"
+    className="gap-2 rounded-xl shadow-lg shadow-primary/20"
+  >
+    Start Learning
+    <ArrowRight size={18} />
+  </Button>
+
+  <Button
+    size="lg"
+    variant="outline"
+    className="rounded-xl"
+  >
+    <Play className="mr-2 h-4 w-4" />
+    Watch Demo
+  </Button>
+
+</div>
+{/*stats */}
 
             <div className="mt-10 flex items-center gap-2 text-sm text-muted-foreground">
               <CheckCircle size={15} className="text-primary" />
@@ -100,18 +158,49 @@ export default function Hero() {
               Free plan available
             </div>
 
-            {/* Stats */}
             <div className="mt-12 grid grid-cols-3 gap-4">
-              {stats.map(({ icon: Icon, value, label }) => (
-                <div key={label} className="text-center">
-                  <div className="flex justify-center mb-1">
-                    <Icon size={18} className="text-primary" />
-                  </div>
-                  <div className="text-2xl font-bold">{value}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
-                </div>
-              ))}
-            </div>
+
+  {stats.map(({ icon: Icon, value, label, suffix }) => (
+
+    <motion.div
+      whileHover={{
+        y: -6,
+      }}
+      key={label}
+      className="rounded-2xl border bg-background/60 backdrop-blur-xl p-5 text-center shadow-lg"
+    >
+
+      <div className="flex justify-center mb-3">
+
+        <Icon
+          size={22}
+          className="text-primary"
+        />
+
+      </div>
+
+      <div className="text-3xl font-black">
+
+        <CountUp
+          end={value}
+          duration={3}
+        />
+
+        {suffix || "+"}
+
+      </div>
+
+      <div className="mt-1 text-sm text-muted-foreground">
+
+        {label}
+
+      </div>
+
+    </motion.div>
+
+  ))}
+
+</div>
           </motion.div>
 
           {/* Right — AI Quiz Card mockup */}
@@ -174,6 +263,24 @@ export default function Hero() {
                 </div>
               </div>
             </div>
+            <div className="mt-5 text-xl font-semibold text-primary">
+
+  <TypeAnimation
+    sequence={[
+      "Generate React Quizzes",
+      2000,
+      "Generate Java Quizzes",
+      2000,
+      "Generate Python Quizzes",
+      2000,
+      "Generate AI Interview",
+      2000,
+    ]}
+    speed={45}
+    repeat={Infinity}
+  />
+
+</div>
 
             {/* Floating score badge */}
             <motion.div

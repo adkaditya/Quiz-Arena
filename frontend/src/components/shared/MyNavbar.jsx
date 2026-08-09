@@ -195,11 +195,11 @@ function MyNavbar() {
               duration-300
               group-hover:scale-110"
             >
-              <BrainCircuit className="h-6 w-6" />
+              <BrainCircuit className="h-6 w-6 animate-pulse text shimmer-color-accent-foreground" />
             </div>
 
             <div className="flex flex-col">
-              <span className="text-xl font-bold">Quizify</span>
+              <span className="text-xl font-bold">InteliQuiz</span>
 
               <span className="text-xs text-muted-foreground">
                 AI Powered Assessment
