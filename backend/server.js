@@ -16,10 +16,9 @@ import questionRouter from "./routes/question.route.js";
 import attemptRouter from "./routes/attempt.route.js";
 import leaderboardRouter from "./routes/leaderboard.route.js";
 import userRouter from "./routes/user.route.js";
-import aiRouter from "./routes/ai.route.js"; // ✅ Import AI Routes
+import aiRouter from "./routes/ai.route.js";
 
 import { exceptionHandler } from "./middlewares/exceptionHandler.middleware.js";
-
 
 app.use(
   cors({
@@ -27,7 +26,8 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:5175",
-       "https://ai-role-quiz-generator.vercel.app",
+      "https://ai-role-quiz-generator.vercel.app",
+      "https://quiz-arena-five-neon.vercel.app",
     ],
     credentials: true,
   })
@@ -35,10 +35,8 @@ app.use(
 
 app.use(express.json());
 
-// Static Folder
 app.use("/uploads", express.static("uploads"));
 
-// Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/violations", violationRouter);
 app.use("/api/v1", categoryRouter);
@@ -48,7 +46,6 @@ app.use("/api/v1", attemptRouter);
 app.use("/api/v1", leaderboardRouter);
 app.use("/api/v1", userRouter);
 
-// ✅ AI Routes
 app.use("/api/v1/ai", aiRouter);
 
 app.get("/", (req, res) => {
@@ -57,6 +54,7 @@ app.get("/", (req, res) => {
     message: "AI Role Quiz Backend is Running 🚀",
   });
 });
+
 app.use(exceptionHandler);
 
 const PORT = process.env.PORT || 5000;
