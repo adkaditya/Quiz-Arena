@@ -28,6 +28,7 @@ app.use(
       "http://localhost:5175",
       "https://ai-role-quiz-generator.vercel.app",
       "https://quiz-arena-five-neon.vercel.app",
+      "https://quiz-arena-git-main-adkadityas-projects.vercel.app"
     ],
     credentials: true,
   })
