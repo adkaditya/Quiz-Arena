@@ -20,6 +20,7 @@ import aiRouter from "./routes/ai.route.js";
 
 import { exceptionHandler } from "./middlewares/exceptionHandler.middleware.js";
 
+// CORS
 app.use(
   cors({
     origin: [
@@ -28,7 +29,7 @@ app.use(
       "http://localhost:5175",
       "https://ai-role-quiz-generator.vercel.app",
       "https://quiz-arena-five-neon.vercel.app",
-      "https://quiz-arena-git-main-adkadityas-projects.vercel.app"
+      "https://quiz-arena-git-main-adkadityas-projects.vercel.app",
     ],
     credentials: true,
   })
@@ -46,7 +47,6 @@ app.use("/api/v1", questionRouter);
 app.use("/api/v1", attemptRouter);
 app.use("/api/v1", leaderboardRouter);
 app.use("/api/v1", userRouter);
-
 app.use("/api/v1/ai", aiRouter);
 
 app.get("/", (req, res) => {
