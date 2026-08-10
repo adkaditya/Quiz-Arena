@@ -23,14 +23,7 @@ import { exceptionHandler } from "./middlewares/exceptionHandler.middleware.js";
 // CORS
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:5175",
-      "https://ai-role-quiz-generator.vercel.app",
-      "https://quiz-arena-five-neon.vercel.app",
-      "https://quiz-arena-git-main-adkadityas-projects.vercel.app",
-    ],
+    origin: true,
     credentials: true,
   })
 );
