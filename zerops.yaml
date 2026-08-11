@@ -13,4 +13,4 @@ zerops:
       ports:
         - port: 5000
           httpSupport: true
-      start: cd backend && npm start
+      start: npm --prefix backend start
